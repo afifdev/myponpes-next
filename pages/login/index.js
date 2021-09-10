@@ -19,7 +19,7 @@ export default function Login() {
       const { data } = await axios.post("/api/login", {
         username,
         password,
-        role: role + 1,
+        role: role,
       });
       if (data.error) {
         setError(1);
@@ -27,7 +27,7 @@ export default function Login() {
       } else {
         user.setUsername(username);
         user.setToken(data.data.token);
-        user.setRole(role + 1);
+        user.setRole(role);
         localStorage.setItem("myponpestoken", data.data.token);
         Router.push("/");
       }
@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   const handleRoleChange = (e) => {
-    setRole(e ? e : 0);
+    setRole(e);
     setShowRole(!showRole);
   };
 
@@ -54,11 +54,14 @@ export default function Login() {
   };
 
   useEffect(() => {
+    setRole(1);
     if (user.role) {
       setTimeout(() => {
         if (user.role === 1) {
-          Router.push("/user/dashboard");
+          Router.push("/santri/dashboard");
         } else if (user.role === 2) {
+          Router.push("/teacher/dashboard");
+        } else if (user.role === 3) {
           Router.push("/admin/dashboard");
         }
       }, 1000);
@@ -68,7 +71,9 @@ export default function Login() {
   return (
     <Layout>
       <Head>
-        <title>Sign In | MyPonpes</title>
+        <title>
+          {user.isDone && !user.role ? "Sign In | MyPonpes" : "Loading..."}
+        </title>
       </Head>
       {user.isDone && !user.role ? (
         <div className="flex h-screen max-h-screen overflow-hidden">
@@ -113,7 +118,7 @@ export default function Login() {
                 onClick={handleShowRole}
                 className="font-medium py-1 px-4 rounded-md border-2 focus:border-blue-500 outline-none focus:outline-none inline-flex items-center"
               >
-                {role ? "Admin" : "Santri"}
+                {role === 1 ? "Santri" : role === 2 ? "Teacher" : "Admin"}
                 <span className="pl-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -137,13 +142,19 @@ export default function Login() {
                 } flex flex-col rounded-md border-2 w-min px-1`}
               >
                 <button
-                  onClick={() => handleRoleChange(0)}
+                  onClick={() => handleRoleChange(1)}
                   className="font-medium py-1 px-4 rounded-md my-1 hover:text-white hover:bg-blue-600 focus:outline-none"
                 >
                   Santri
                 </button>
                 <button
-                  onClick={() => handleRoleChange(1)}
+                  onClick={() => handleRoleChange(2)}
+                  className="font-medium py-1 px-4 rounded-md my-1 hover:text-white hover:bg-blue-600 focus:outline-none"
+                >
+                  Teacher
+                </button>
+                <button
+                  onClick={() => handleRoleChange(3)}
                   className="font-medium py-1 px-4 rounded-md my-1 hover:text-white hover:bg-blue-600 focus:outline-none"
                 >
                   Admin
