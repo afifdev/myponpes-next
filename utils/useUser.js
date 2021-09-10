@@ -7,7 +7,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [username, setUsername] = useState("");
   const [token, setToken] = useState("");
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState(0);
   const [isDone, setIsDone] = useState(0);
 
   useEffect(async () => {
