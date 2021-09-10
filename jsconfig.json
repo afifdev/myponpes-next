@@ -6,6 +6,7 @@
             "@styles/*": ["styles/*"],
             "@utils/*": ["utils/*"],
             "@models/*": ["models/*"],
+            "@pages/*": ["pages/*"]
         }
     },"exclude": ["node_modules"]
 }
