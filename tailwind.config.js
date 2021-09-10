@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        cool: ["Gilroy", "sans-serif"],
+        cool: ["TTCommons", "sans-serif"],
       },
     },
   },
