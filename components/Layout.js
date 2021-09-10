@@ -1,3 +1,3 @@
 export default function Layout({ children }) {
-  return <div className="font-cool font-medium">{children}</div>;
+  return <div className="font-cool">{children}</div>;
 }
